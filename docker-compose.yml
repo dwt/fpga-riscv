@@ -1,0 +1,7 @@
+services:
+  builder:
+    platform: linux/amd64
+    build: .
+    command: bash
+    stdin_open: true
+    tty: true
