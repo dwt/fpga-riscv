@@ -8,6 +8,7 @@ WORKDIR /f4pga-examples
 
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O conda_installer.sh
 
+ENV HOME=/root
 ENV F4PGA_INSTALL_DIR=$HOME/opt/f4pga
 ENV FPGA_FAM=xc7
 
