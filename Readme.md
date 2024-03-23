@@ -94,16 +94,35 @@ source init
 ./make.py --board=arty --variant=a7-35 --build --toolchain=symbiflow --sys-clk-freq=80e6
 ```
 
-now we can connect via serial (port 2!!)
+now we can connect via serial (port 2!!) on the host
 
 ```shell
 openFPGALoader -b arty_a7_100t zephyr-on-litex-vexriscv/build/digilent_arty/gateware/digilent_arty.bit
+```
 
+Back in the container:
+
+This is problematic, we want a newer version of python for the current dependencies, but the image has python3.7. The images theoretically could build with newer debian versions, but thats currently broken.
+
+What can we do?
+
+- Debug the github actions and understand why they don't work
+- Go back to an older version of zephyr.
+- Look for packaged toolchains in some linux distributions
+
+The last option is probably much easier for now.
+
+```shell
+conda deactivate
 mkdir west
 cd west
-west init .
-west update
-west zephyr-export
+python3.11 -m venv venv
+source venv/bin/activate
+pip install west
+apt install git
+west init . && \
+west update && \
+west zephyr-export && \
 pip install -r zephyr/scripts/requirements.txt
 ```
 
@@ -154,5 +173,28 @@ litex_term.py  /dev/tty.usbserial-210319B580D41 --speed 115200 --kernel ../west/
   - [Zephyr zum Laufen kriegen](https://docs.zephyrproject.org/latest/boards/riscv/litex_vexriscv/doc/index.html)
   - [Micropython darauf an den Start kriegen](https://docs.micropython.org/en/latest/zephyr/quickref.html)
 - [Es gibt auch einen nativen Port von MicroPython auf VexRisc](https://www.hackster.io/matrix-labs/risc-v-soc-soft-core-w-micropython-on-matrix-voice-fpga-7be85c)
+  - [LiteX Build Environment](https://github.com/matrix-io/litex-buildenv/blob/master/scripts/build-micropython.sh)
+  - [LiteX Micropython](https://github.com/fupy/micropython)
 - [Hier hat auch jemand irgendwas mit GUI gebaut. Ist das relevant?](https://github.com/suarezvictor/litex_imgui_usb_demo)
 - Hinkriegen das wir ein VGA output haben den wir via FrameBuffer ansprechen können. Unklar wo das her kommt, weil vermutlich noch nicht enthalten. [Hier gibts eine Demo wie man das integriert](https://projectf.io/posts/fpga-graphics/)
+- [Micropython PNG Loading](https://github.com/Ratfink/micropython-png/blob/master/png.py)
+- [Micropython NumPy](https://github.com/ComplexArts/micropython-numpy)
+
+# Links to base images
+
+- [HDL Container Images](https://github.com/hdl/containers)
+- [The Image we are using](https://hub.docker.com/layers/hdlc/conda/f4pga--xc7--a50t/images/sha256-0f6778e3564705a6ff457f15354d6394ca55b3d79075885647be18c8a90fc9c9?context=explore)
+
+# Wir brauchen einen neuen Ansatz
+
+Die alten Docker images sind… 💩 Alles mögliche ist in dem Virtualenv installiert was da nicht reingehört. (Das liegt vielleicht an Conda?).
+
+Inzwischen scheint die Packetierung der Tools viel besser geworden zu sein, vielleicht kann man inzwischen sogar nativ installieren? -> homebrew, nix.
+
+Ein nix flake angeben zu können für: Damit kann man das ausprobieren in einer nix-shell wäre schon fein.
+
+Einige Links um zu starten:
+
+- [LiteX BuildEnv](https://github.com/matrix-io/litex-buildenv)
+- [MicroPython port für LiteX FPGA](https://github.com/fupy/micropython)
+- [Aktuelle Getting-Started Doku für F4PGA](https://f4pga.readthedocs.io/en/latest/getting-started.html)
