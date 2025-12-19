@@ -1,3 +1,8 @@
+# see https://f4pga.readthedocs.io/en/latest/getting-started.html
+# see https://f4pga-examples.readthedocs.io/en/latest/xc7/litex_demo.html
+# try to adapt https://github.com/mgttu/f4pga-docker
+# see https://docs.zephyrproject.org/latest/boards/riscv/litex_vexriscv/doc/index.html
+
 FROM --platform=linux/amd64 ubuntu:latest
 
 RUN apt update -y
