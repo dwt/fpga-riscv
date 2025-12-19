@@ -7,7 +7,7 @@
 # Neues Board OrangeCrab
 
 * [Hersteller](https://1bitsquared.com/products/orangecrab) - discontinued
-* [Beispiel Linux VexRisc LiteX](https://github.com/litex-hub/linux-on-litex-vexriscv)
+* [Linux VexRisc LiteX](https://github.com/litex-hub/linux-on-litex-vexriscv)
   * links to fork of [Lattice ECP5 FPGA Toolchain using Yosys and nextpnr](https://github.com/f4pga/prjtrellis)
   * if possible we want to use [upstream](https://github.com/YosysHQ/prjtrellis)
 * [OSS-Cad-Suite](https://github.com/YosysHQ/oss-cad-suite-build) installieren
@@ -20,15 +20,14 @@
 
 # Versuch linux-on-litex-vexriscv zum laufen zu kriegen
 
-- wir haben in chk_fail.c die den call für write weggepatcht -> TODO Bug melden?
-  - evtl. https://github.com/enjoy-digital/litex/issues/1621
-  - lösung vermutlich das die pkgsCross den falschen target tripple setzt: linux statt unknown!
-- button gedrückt halten auf dem orangecrab board während man es ansteckt
+[Diesen Build Anweisungen folgen wir](https://github.com/litex-hub/linux-on-litex-vexriscv)
+
+- dfu modus um bitstream zu patchen: button gedrückt halten auf dem orangecrab board bis die LEDs nicht mehr flashen, sondern pulsieren -> dann dfu ready
 - Welche scripte haben wir ausgeführt
-  - bin/update-all-repos.sh
   - bin/install-litex.sh
   - bin/build-bitstream-for-orangecrab.sh
   - bin/load-bitstream-for-orangecrab.sh
+  - # missing: compile-linux-for-orangecrab
   - bin/load-linux-for-orangecrab.sh
 
 Damit haben wir ein Linux (pre-compiled downlaoded from bug...) gestartet und kriegen eine shell auf dem gerät.

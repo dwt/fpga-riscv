@@ -5,6 +5,10 @@
   python ? pkgs.python312,
 }:
 pkgs.mkShell {
+  env = {
+    # gcc marks itself as not supported for riscv32-embedded. Strange enough the packages are cached and working though. ¿¿¿
+    NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM = 1;
+  };
   nativeBuildInputs = with pkgs.buildPackages; [
     # FPGA tools - build rics5 core for Lattice ECP5 FPGA
     trellis # Lattice ECP5 open source bitstream tools
@@ -17,7 +21,7 @@ pkgs.mkShell {
     git # version control system
     python.pkgs.setuptools
     python.pkgs.pip
-    pkgsCross.riscv32.gcc # cross compiler to riscv64
+    pkgsCross.riscv32-embedded.gcc # cross compiler to riscv64
 
     ## only for simulation
     # verilator
@@ -50,9 +54,9 @@ pkgs.mkShell {
         git clone https://github.com/litex-hub/linux-on-litex-vexriscv
     fi
 
-    if [ ! -f litex_setup.py ]; then
-        wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py
-        python litex_setup.py --init --install
+    if [ ! -d litex ]; then
+        git clone git@github.com:enjoy-digital/litex.git
+        env -C litex python litex_setup.py --init --install
     fi
   '';
 }
