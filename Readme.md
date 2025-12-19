@@ -1,5 +1,61 @@
+# Was wollen wir erreichen?
+
+- Risc5 Prozessor auf Orangecrab synthetisieren
+- Linux darauf booten
+- MicroPython darauf booten
+
+# Neues Board OrangeCrab
+
+* [Hersteller](https://1bitsquared.com/products/orangecrab) - discontinued
+* [Beispiel Linux VexRisc LiteX](https://github.com/litex-hub/linux-on-litex-vexriscv)
+  * links to fork of [Lattice ECP5 FPGA Toolchain using Yosys and nextpnr](https://github.com/f4pga/prjtrellis)
+  * if possible we want to use [upstream](https://github.com/YosysHQ/prjtrellis)
+* [OSS-Cad-Suite](https://github.com/YosysHQ/oss-cad-suite-build) installieren
+* `./activate` einmal um das quarantäne attribut zu entfernen
+* Virtualenv aktivieren mit `source ./environment.fish`
+* [Diesen Instruktionen folgen um LiteX zu installieren](https://github.com/YosysHQ/oss-cad-suite-build?tab=readme-ov-file#using-litex)
+* Herunterladen von [prebuilt binaries für den OrangeCrab](https://github.com/litex-hub/linux-on-litex-vexriscv/issues/164)
+* [Im wesentlichen diesen Instruktionen folgen](https://github.com/litex-hub/linux-on-litex-vexriscv?tab=readme-ov-file)
+* Das war alles nix, daher nächster Versuch mit [diesem Docker-Image](https://gcr.io/hdl-containers/impl) [von hier](https://hdl.github.io/containers/ToolsAndImages.html)
+
+# Versuch linux-on-litex-vexriscv zum laufen zu kriegen
+
+- wir haben in chk_fail.c die den call für write weggepatcht -> TODO Bug melden?
+  - evtl. https://github.com/enjoy-digital/litex/issues/1621
+  - lösung vermutlich das die pkgsCross den falschen target tripple setzt: linux statt unknown!
+- button gedrückt halten auf dem orangecrab board während man es ansteckt
+- Welche scripte haben wir ausgeführt
+  - bin/update-all-repos.sh
+  - bin/install-litex.sh
+  - bin/build-bitstream-for-orangecrab.sh
+  - bin/load-bitstream-for-orangecrab.sh
+  - bin/load-linux-for-orangecrab.sh
+
+Damit haben wir ein Linux (pre-compiled downlaoded from bug...) gestartet und kriegen eine shell auf dem gerät.
+
+Nächste Experimente:
+- können wir die gebaute orangecrab.dtb statt der downloaded rv32.dtb verwenden? Oder die gebaute rv32.dtb?
+- können wir ein neueres (downloaded from somewhere) Image und rootfs.cpio verwenden?
+
+# Versuch micropython für vexricsv auf litex zum laufen zu kriegen
+
+TODO next
+
+
+# Versuch OSS-CAD-Suite zu verwenden
+* [Installation OSS-CAD-Suite](https://github.com/YosysHQ/oss-cad-suite-build/releases)
+* [Installation litex] `git clone git@github.com:enjoy-digital/litex.git`
+  * Virtualenv aktivieren, init + install
+* `brew install riscv64-elf-binutils` `brew install riscv64-elf-gcc`
+
+Resultat: Alles schit, die distribution ist kacke, ab in Docker damit.
+* [Gibts angeblich hier](https://hdl.github.io/containers/ToolsAndImages.html#images-including-multiple-tools) oder [hier](https://console.cloud.google.com/gcr/images/hdl-containers/GLOBAL/impl)
+  * Herausfinden ob das current und gepflegt ist
+
 # Links
 
+- [WebAssembly Packages Yosys](https://yowasp.org)
+- [Alles außer Xylinx Support, dafür aktuell](https://github.com/YosysHQ/oss-cad-suite-build/releases)
 - [Docker Images for f4pga](https://github.com/mgttu/f4pga-docker)
 - [How to use the Docker Images](https://hdl.github.io/containers/ug/AllInOne.html#f4pga)
 - [What images exist and what do they contan](https://hdl.github.io/containers/ToolsAndImages.html#tools-and-images-f4pga)
@@ -175,6 +231,7 @@ litex_term.py  /dev/tty.usbserial-210319B580D41 --speed 115200 --kernel ../west/
 - [Es gibt auch einen nativen Port von MicroPython auf VexRisc](https://www.hackster.io/matrix-labs/risc-v-soc-soft-core-w-micropython-on-matrix-voice-fpga-7be85c)
   - [LiteX Build Environment](https://github.com/matrix-io/litex-buildenv/blob/master/scripts/build-micropython.sh)
   - [LiteX Micropython](https://github.com/fupy/micropython)
+  - [Vermutlich ist das neuer](https://github.com/litex-hub/micropython/tree/litex-rebase/ports/litex)
 - [Hier hat auch jemand irgendwas mit GUI gebaut. Ist das relevant?](https://github.com/suarezvictor/litex_imgui_usb_demo)
 - Hinkriegen das wir ein VGA output haben den wir via FrameBuffer ansprechen können. Unklar wo das her kommt, weil vermutlich noch nicht enthalten. [Hier gibts eine Demo wie man das integriert](https://projectf.io/posts/fpga-graphics/)
 - [Micropython PNG Loading](https://github.com/Ratfink/micropython-png/blob/master/png.py)
