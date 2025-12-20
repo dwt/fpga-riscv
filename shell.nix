@@ -21,7 +21,7 @@ pkgs.mkShell {
     git # version control system
     python.pkgs.setuptools
     python.pkgs.pip
-    pkgsCross.riscv32-embedded.gcc # cross compiler to riscv64
+    pkgsCross.riscv32-embedded.gcc # cross compiler to riscv
 
     ## only for simulation
     # verilator
