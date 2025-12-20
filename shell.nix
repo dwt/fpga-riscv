@@ -53,6 +53,10 @@ pkgs.mkShell {
 
     if [ ! -d linux-on-litex-vexriscv ]; then
         git clone https://github.com/litex-hub/linux-on-litex-vexriscv
+        (
+            cd linux-on-litex-vexriscv/images
+            wget https://github.com/litex-hub/linux-on-litex-vexriscv/files/8331338/linux_2022_03_23.zip
+        )
     fi
 
     if [ ! -d litex ]; then
