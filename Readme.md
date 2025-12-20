@@ -5,7 +5,7 @@
 - MicroPython darauf booten
 
 # Neues Board OrangeCrab
-
+w
 * [Hersteller](https://1bitsquared.com/products/orangecrab) - discontinued
 * [Linux VexRisc LiteX](https://github.com/litex-hub/linux-on-litex-vexriscv)
   * links to fork of [Lattice ECP5 FPGA Toolchain using Yosys and nextpnr](https://github.com/f4pga/prjtrellis)
@@ -38,7 +38,17 @@ Nächste Experimente:
 
 # Versuch micropython für vexricsv auf litex zum laufen zu kriegen
 
-TODO next
+## Plan
+
+- [Zephyr on vexriscv bauen](https://github.com/litex-hub/zephyr-on-litex-vexriscv)
+  - [Zephyr Docs zum bauen](https://docs.zephyrproject.org/latest/boards/enjoydigital/litex_vexriscv/doc/index.html)
+- Micropython dafür bauen
+
+## Zephyr bauen
+
+Vermutlich kommen wir weiter wenn wir der [ci von zepyhr-on-litex folgen](zephyr-on-litex-vexriscv/.github/workflows/ci.yml)
+- bin/10-generate-overlay.sh
+
 
 
 # Versuch OSS-CAD-Suite zu verwenden

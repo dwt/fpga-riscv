@@ -37,6 +37,7 @@ pkgs.mkShell {
     ninja
     dfu-util
     python.pkgs.west # build tool for zepyr rtos
+    cmake
     python
     uv
 
