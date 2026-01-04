@@ -5,24 +5,52 @@
 - MicroPython darauf booten
 
 # Neues Board OrangeCrab
-w
+
+- Wir haben: orange_crab 85F
+- dfu modus um bitstream zu patchen: button gedrückt halten auf dem orangecrab board bis die LEDs nicht mehr flashen, sondern pulsieren -> dann dfu ready, je nach geladener executable muss man das während dem anstecken machen
+- exit dfu mode: `dfu-util --alt 0 --detach`
+- das board hat 2 DFU-Interfaces:
+  - ALT 0: BITSTREAM # hier kann man risc5 code aufspielen
+  - ALT 1: RISC-V FIRMWARE # das ist der FPGA bitstream
+
+**Docs**
 * [Hersteller](https://1bitsquared.com/products/orangecrab) - discontinued
 * [Linux VexRisc LiteX](https://github.com/litex-hub/linux-on-litex-vexriscv)
   * links to fork of [Lattice ECP5 FPGA Toolchain using Yosys and nextpnr](https://github.com/f4pga/prjtrellis)
   * if possible we want to use [upstream](https://github.com/YosysHQ/prjtrellis)
 * [OSS-Cad-Suite](https://github.com/YosysHQ/oss-cad-suite-build) installieren
-* `./activate` einmal um das quarantäne attribut zu entfernen
-* Virtualenv aktivieren mit `source ./environment.fish`
 * [Diesen Instruktionen folgen um LiteX zu installieren](https://github.com/YosysHQ/oss-cad-suite-build?tab=readme-ov-file#using-litex)
 * Herunterladen von [prebuilt binaries für den OrangeCrab](https://github.com/litex-hub/linux-on-litex-vexriscv/issues/164)
 * [Im wesentlichen diesen Instruktionen folgen](https://github.com/litex-hub/linux-on-litex-vexriscv?tab=readme-ov-file)
 * Das war alles nix, daher nächster Versuch mit [diesem Docker-Image](https://gcr.io/hdl-containers/impl) [von hier](https://hdl.github.io/containers/ToolsAndImages.html)
 
-# Versuch linux-on-litex-vexriscv zum laufen zu kriegen
+## Micropython on bare metal (LiteX VexRiscV) bauen TODO
+
+- [Anleitung](https://github.com/enjoy-digital/litex/wiki/Run-MicroPython-CircuitPython-On-Your-SoC)
+- [Micropython-Repo](https://github.com/litex-hub/micropython/tree/litex-rebase)
+- [Alternative: CircuitPython](https://github.com/gregdavill/circuitpython/tree/orangecrab)
+
+## Versuch bare bones Beispiele auf VexRiscV zum laufen zu kriegen
+
+* [Beispiele](https://github.com/orangecrab-fpga/orangecrab-examples)
+
+Was haben wir gemacht
+```shell
+31-load-bare-boanes-blinker.sh
+```
+
+## Versuch micropython für VexRicsV auf LiteX und Zephyr zum laufen zu kriegen
+
+- [Zephyr on vexriscv bauen](https://github.com/litex-hub/zephyr-on-litex-vexriscv)
+  - [Zephyr Docs zum bauen](https://docs.zephyrproject.org/latest/boards/enjoydigital/litex_vexriscv/doc/index.html)
+  - Resultat: keine gute Idee, Zephyr viel zu komplex, insbesondere für den Anfang
+- Micropython dafür bauen sollte dafür einfach sein weil nativ unterstützt
+
+## Versuch linux-on-litex-vexriscv zum laufen zu kriegen
 
 [Diesen Build Anweisungen folgen wir](https://github.com/litex-hub/linux-on-litex-vexriscv)
+- siehe Scripte 21-29
 
-- dfu modus um bitstream zu patchen: button gedrückt halten auf dem orangecrab board bis die LEDs nicht mehr flashen, sondern pulsieren -> dann dfu ready
 - Welche scripte haben wir ausgeführt
   - bin/install-litex.sh
   - bin/build-bitstream-for-orangecrab.sh
@@ -36,20 +64,12 @@ Nächste Experimente:
 - können wir die gebaute orangecrab.dtb statt der downloaded rv32.dtb verwenden? Oder die gebaute rv32.dtb?
 - können wir ein neueres (downloaded from somewhere) Image und rootfs.cpio verwenden?
 
-# Versuch micropython für vexricsv auf litex zum laufen zu kriegen
-
-## Plan
-
-- [Zephyr on vexriscv bauen](https://github.com/litex-hub/zephyr-on-litex-vexriscv)
-  - [Zephyr Docs zum bauen](https://docs.zephyrproject.org/latest/boards/enjoydigital/litex_vexriscv/doc/index.html)
-- Micropython dafür bauen
 
 ## Zephyr bauen
 
 Vermutlich kommen wir weiter wenn wir der [ci von zepyhr-on-litex folgen](zephyr-on-litex-vexriscv/.github/workflows/ci.yml)
-- bin/10-generate-overlay.sh
 
-
+hat nicht funktioniert
 
 # Versuch OSS-CAD-Suite zu verwenden
 * [Installation OSS-CAD-Suite](https://github.com/YosysHQ/oss-cad-suite-build/releases)

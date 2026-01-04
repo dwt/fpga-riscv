@@ -45,11 +45,12 @@ pkgs.mkShell {
 
   ];
 
-  shellHook = ''
+  shellHook = /* bash */ ''
     if [ ! -d ".venv" ]; then
       uv venv --python "${pkgs.lib.getExe python}"
     fi
     source .venv/bin/activate
+    export PATH=$PWD/bin:"$PATH"
 
     if [ ! -d linux-on-litex-vexriscv ]; then
         git clone https://github.com/litex-hub/linux-on-litex-vexriscv
@@ -57,6 +58,10 @@ pkgs.mkShell {
             cd linux-on-litex-vexriscv/images
             wget https://github.com/litex-hub/linux-on-litex-vexriscv/files/8331338/linux_2022_03_23.zip
         )
+    fi
+
+    if [ ! -d orangecrab-examples ]; then
+        git clone https://github.com/orangecrab-fpga/orangecrab-examples
     fi
 
     if [ ! -d litex ]; then
