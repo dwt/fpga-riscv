@@ -1,8 +1,8 @@
 # Was wollen wir erreichen?
 
-- RiscV Prozessor auf Orangecrab synthetisieren
-- Linux darauf booten
-- MicroPython darauf booten
+- [x] RiscV Prozessor auf Orangecrab synthetisieren
+- [x] Linux darauf booten
+- [ ] MicroPython darauf booten
 
 # Neues Board OrangeCrab
 
