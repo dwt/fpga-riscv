@@ -1,6 +1,6 @@
 # Was wollen wir erreichen?
 
-- Risc5 Prozessor auf Orangecrab synthetisieren
+- RiscV Prozessor auf Orangecrab synthetisieren
 - Linux darauf booten
 - MicroPython darauf booten
 
@@ -10,7 +10,7 @@
 - dfu modus um bitstream zu patchen: button gedrückt halten auf dem orangecrab board bis die LEDs nicht mehr flashen, sondern pulsieren -> dann dfu ready, je nach geladener executable muss man das während dem anstecken machen
 - exit dfu mode: `dfu-util --alt 0 --detach`
 - das board hat 2 DFU-Interfaces:
-  - ALT 0: BITSTREAM # hier kann man risc5 code aufspielen
+  - ALT 0: BITSTREAM # hier kann man riscv code aufspielen
   - ALT 1: RISC-V FIRMWARE # das ist der FPGA bitstream
 
 **Docs**

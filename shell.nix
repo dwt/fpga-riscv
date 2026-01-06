@@ -30,7 +30,7 @@ pkgs.mkShell {
     ## onlly for hardware test
     # openocd
 
-    # Build Linux for risc5
+    # Build Linux for riscv
     # not yet available for darwin :-(
     # coreboot-toolchain.riscv
     meson
