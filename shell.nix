@@ -28,7 +28,6 @@ pkgs.mkShell {
     python.pkgs.setuptools
     python.pkgs.pip
     risv32-embedded-pkgs.gcc # cross compiler to riscv
-    # pkgsCross.riscv64-embedded.gcc # cross compiler to riscv
 
     ## only for simulation
     # verilator
