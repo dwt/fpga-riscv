@@ -3,6 +3,12 @@
 {
   pkgs ? import <nixpkgs> { },
   python ? pkgs.python312,
+  risv32-embedded-pkgs ? import <nixpkgs> {
+    crossSystem = pkgs.lib.systems.examples.riscv32-embedded // {
+      gcc.arch = "rv32im";
+      gcc.abi = "ilp32";
+    };
+  },
 }:
 pkgs.mkShell {
   env = {
@@ -21,7 +27,8 @@ pkgs.mkShell {
     git # version control system
     python.pkgs.setuptools
     python.pkgs.pip
-    pkgsCross.riscv32-embedded.gcc # cross compiler to riscv
+    risv32-embedded-pkgs.gcc # cross compiler to riscv
+    # pkgsCross.riscv64-embedded.gcc # cross compiler to riscv
 
     ## only for simulation
     # verilator
