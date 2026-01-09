@@ -28,7 +28,14 @@
 
 - [Anleitung](https://github.com/enjoy-digital/litex/wiki/Run-MicroPython-CircuitPython-On-Your-SoC)
 - [Micropython-Repo](https://github.com/litex-hub/micropython/tree/litex-rebase)
+- Gibt evtl. noch einen neueren Branch von Ihm: [suarezvictor's fork](https://github.com/suarezvictor/micropython/tree/litex-rebase)
 - [Alternative: CircuitPython](https://github.com/gregdavill/circuitpython/tree/orangecrab)
+
+TODO
+- modify build scripts to place build folder in top level instead of in in linox-on-litex folder
+  - probably we don't need it anymore? cold be that we need something like micropython-on-litex?
+  - wir brauchen aber auch irgendwelche hardwareinformationen aus dem litex projekt
+- Vermutung die nix toolchain hardcoded die libc aus dem nix store, anstatt die aus dem litex projekt gebaute libc zu verwenden
 
 ## Versuch bare bones Beispiele auf VexRiscV zum laufen zu kriegen
 
